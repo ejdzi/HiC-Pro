@@ -722,34 +722,44 @@ if __name__ == "__main__":
                         str(or1.mapping_quality) + "\t" + 
                         str(or2.mapping_quality) + "\t" + 
                         str(htag) + "\n")
-                elif r2.is_unmapped:
+                elif not r1.is_unmapped and r2.is_unmapped:
+		    if r1_resfrag is not None: 
+			r1_fragname = r1_resfrag.value['name'] 
+		    else: 
+			r1_fragname = 'NA' 
+		    r2_fragname = 'NA' 
                     cur_handler.write(
-                        or1.qname + "\t" +
-                        or1_chrom + "\t" +
-                        str(get_read_pos(or1)) + "\t" +
-                        str(get_read_strand(or1)) + "\t" +
+                        r1.qname + "\t" +
+                        r1_chrom + "\t" +
+                        str(get_read_pos(r1)) + "\t" +
+                        str(get_read_strand(r1)) + "\t" +
                         "+" + "\t" +
                         "0" + "\t" +
                         "*" + "\t" +
                         str(dist) + "\t" + 
-                        or1_fragname + "\t" +
-                        or2_fragname + "\t" +
-                        str(or1.mapping_quality) + "\t" + 
-                        str(or2.mapping_quality) + "\n")
+                        r1_fragname + "\t" +
+                        r2_fragname + "\t" +
+                        str(r1.mapping_quality) + "\t" + 
+                        str(r2.mapping_quality) + "\n") 
                 else:
+		    if r2_resfrag is not None:
+			r2_fragname = r2_resfrag.value['name']
+		    else:
+			r2_fragname = 'NA'
+		    r1_fragname = 'NA'
                     cur_handler.write(
-                        or1.qname + "\t" +
+                        r1.qname + "\t" +
                         "*" + "\t" +
                         "0" + "\t" +
                         "*" + "\t" +
-                        or2_chrom + "\t" +
-                        str(get_read_pos(or2)) + "\t" +
-                        str(get_read_strand(or2)) + "\t" +
+                        r2_chrom + "\t" +
+                        str(get_read_pos(r2)) + "\t" +
+                        str(get_read_strand(r2)) + "\t" +
                         str(dist) + "\t" +
-                        or1_fragname + "\t" +
-                        or2_fragname + "\t" +
-                        str(or1.mapping_quality) + "\t" + 
-                        str(or2.mapping_quality) + "\n")
+                        r1_fragname + "\t" +
+                        r2_fragname+ "\t" +
+                        str(r1.mapping_quality) + "\t" +  
+                        str(r2.mapping_quality) + "\n") 
                 
                 ## Keep initial order    
                 if samOut:
